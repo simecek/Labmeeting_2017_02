@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Aging Proteome</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Petr Simecek" />
+    <link href="include/remark-css/example.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# The Aging Proteome
+## Is Aging Programmed in our Genes?<br><br><br>
+### Petr Simecek
+### 2017/02/08
+
+---
+
+
+
+
+background-image: url("https://pbs.twimg.com/media/BelWk8HIQAAbd3P.jpg:large")
+background-position: 50% 50%
+
+class: center, middle
+
+---
+class: inverse, center, middle
+
+# Kidney &amp; Heart DO Datasets
+
+### [simecek.github.io/TheAgingProteome](https://simecek.github.io/TheAgingProteome)
+
+---
+
+# Overview
+
+- Male and females, 6m / 12m / 18m old (32 mice per group)
+
+--
+
+- 187 / 188 animals, mRNA and protein expression
+
+--
+
+- DOQTL analyses and R/Shiny viewers:
+
+  - [heart](http://churchilldev.jax.org:49194/heart/) 
+  - [kidney](http://churchilldev.jax.org:49194/kidney/) 
+  - [others](http://churchill-lab.jax.org/website/shinytools)
+
+- qtl2 analyses and Flask/plumber/D3 viewers:
+
+  - [kidney](http://churchill-lab.jax.org/qtl/kidney/DO188/)
+
+--
+
+- Results stored in [my Dropbox](https://www.dropbox.com/sh/m9tomk47gmeeu6w/AAB24166oefnqsoIVhW57TiGa?dl=0)
+
+--
+
+- Github Page (workflowr): [simecek.github.io/TheAgingProteome](https://simecek.github.io/TheAgingProteome)
+
+---
+
+# ANOVA Tests
+
+For each gene/protein, we have fitted a linear model
+
+$$ y ∼ Age+Sex+Generation $$
+
+and then tested the significance of `\(Age\)` / `\(Sex\)` / `\(Age:Sex\)` interaction.
+
+---
+
+# Sex Effect is Weaker for Heart
+
+![whatever](http://simecek.github.io/TheAgingProteome/figure/pval-histograms.Rmd/mrna_sex-1.png)
+class: center, middle
+
+---
+
+# Sex Effect is Weaker for Heart (cont'd)
+
+![whatever](https://simecek.github.io/TheAgingProteome/figure/pval-histograms.Rmd/protein_sex-1.png)
+class: center, middle
+
+---
+
+# Age Effect is Weaker for mRNA
+
+![whatever](https://simecek.github.io/TheAgingProteome/figure/pval-histograms.Rmd/mrna_age-1.png)
+class: center, middle
+
+---
+
+# Age Effect is Stronger for Proteins
+
+![whatever](https://simecek.github.io/TheAgingProteome/figure/pval-histograms.Rmd/protein_age-1.png)
+class: center, middle
+
+---
+
+# PCA plots: Kidney / mRNA
+
+&lt;img src="Labmeeting_2017_02_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# PCA plots: Kidney / Protein
+
+&lt;img src="Labmeeting_2017_02_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# PCA plots: Heart / mRNA
+
+&lt;img src="Labmeeting_2017_02_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# PCA plots: Heart / Protein
+
+&lt;img src="Labmeeting_2017_02_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Mediation Plots - Theory
+
+For each protein, we have fitted ANOVA model
+
+$$ Protein \sim Age + Sex+Generation$$
+
+and a model with a corresponding RNA expression included in covariates
+
+$$ Protein \sim Age + Sex+Generation+mRNA$$
+
+Let us assume Age/Sex effect is highly significant in the first model (p-value close to zero). If the effect is mediated by mRNA expression (Age/Sex -&gt; mRNA -&gt; Protein) then the dependence in the second model should be much weaker (i.e. p-value higher).
+
+If Age/Sex effect skips mRNA-level and influence protein expression directly, i.e. the effect is not mediated by mRNA, then we expect p-value not to change (or even decrease if strong mRNA-Protein relationship explains part of noise).
+
+---
+
+# Mediation Plots - Kidney
+
+&lt;img src="Labmeeting_2017_02_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Mediation Plots - Heart
+
+&lt;img src="Labmeeting_2017_02_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Example - Fmo5
+
+&lt;center&gt;
+flavin containing monooxygenase 5
+
+&lt;img src="http://simecek.github.io/TheAgingProteome/figure/examples.Rmd/Fmo5-1.png" width="60%"&gt;
+&lt;/center&gt;
+
+---
+
+# Example - Ace
+
+&lt;center&gt;
+angiotensin I converting enzyme (peptidyl-dipeptidase A) 1
+
+&lt;img src="https://simecek.github.io/TheAgingProteome/figure/examples.Rmd/Ace-1.png" width="60%"&gt;
+&lt;/center&gt;
+
+---
+
+# Example - Acta2
+
+&lt;center&gt;
+actin, alpha 2, smooth muscle, aorta
+
+&lt;img src="http://simecek.github.io/TheAgingProteome/figure/examples.Rmd/Acta2-1.png" width="60%"&gt;
+&lt;/center&gt;
+
+---
+class: inverse, center, middle
+
+# Workflowr package
+
+### http://github.com/jdblischak/workflowr
+
+---
+background-image: url("http://tub.tubgit.com/images251/uv02t5vgx3a.jpg")
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url("https://github.com/yihui/xaringan/releases/download/v0.0.2/karl-moustache.jpg")
+background-size: cover
+class: center, bottom, inverse
+
+# And now something completely different!
+
+---
+
+class: inverse, center, middle
+
+# Mediation
+
+### http://github.com/simecek/intermediate
+
+---
+
+# What is mediation?
+
+ 1) `\(X \rightarrow Y\)` 
+ (i.e. `\(X \not\mkern-5mu{\perp\mkern-10mu\perp} Y\)`)
+
+ 2) `\(M \rightarrow Y\)` 
+ (i.e. `\(M \not\mkern-5mu{\perp\mkern-10mu\perp} Y\)`)
+ 
+ 3) `\(X \rightarrow M \rightarrow Y\)` 
+ (i.e. `\(X {\perp\mkern-10mu\perp} Y | M\)`)
+ 
+ 4) But not `\(X \rightarrow Y \rightarrow M\)`
+ (i.e. `\(X \not\mkern-5mu{\perp\mkern-10mu\perp} M | Y\)`)
+
+---
+
+# Mediation issues
+
+ 1) Shared QTL vs. True mediation
+
+ 2) LOD drop threshold, the minimizer is not necessarily the true mediator
+ 
+ 3) `\(M \leftarrow Q \rightarrow Y\)` vs. `\(Q \rightarrow M \rightarrow Y\)`
+
+---
+background-image: url("http://img0.etsystatic.com/069/1/8631557/il_fullxfull.827661664_2oto.jpg")
+background-size: cover
+class: center, top
+
+# Thank you for your attention!
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('showSlide', function (slide) {setTimeout(function() {window.dispatchEvent(new Event('resize'));}, 100)});</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
